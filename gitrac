@@ -18,6 +18,9 @@ def main():
   parse_opt();
 
 def parse_opt():
+  if len(sys.argv) == 1:
+    usage();
+    return;
   opt = sys.argv[1]
   if opt == "clone":
       url = sys.argv[2]
@@ -32,13 +35,14 @@ def parse_opt():
   if opt == "help":
       usage();
 
+def usage():
+  print "gitrac [command] ";
+
 def create_ticket_repository(url):
     import ConfigParser
     config = ConfigParser.RawConfigParser()
     config.read('.trac/settings.conf');
 
-def usase():
-  print "gitrac [command] ";
 
 def init_ticket_db():
   if os.path.exists(local_trac_dir) == False:
