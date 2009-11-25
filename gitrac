@@ -36,7 +36,12 @@ def parse_opt():
       usage();
 
 def usage():
-  print "gitrac [command] ";
+  usage_message = """
+gitrac [command] 
+
+  command:
+    %s""" % ticket_list.__doc__;
+  print usage_message;
 
 def create_ticket_repository(url):
     import ConfigParser
@@ -71,6 +76,7 @@ def create_local_ticket():
   db.execute(sql);
 
 def ticket_list():
+  """   list - show local ticket list """
   for id,ticket_id,summary,close in db.execute('select * from local_ticket'):
     resistered = ticket_id != None
     if resistered:
