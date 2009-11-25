@@ -35,5 +35,5 @@ license
 EPL License
 
 ##### author #####
-written by Hiroki Kondo(a.k.a kompiro)
+written by Hiroki Kondo(aka kompiro)
 
