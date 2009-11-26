@@ -16,7 +16,9 @@ def parse_opt():
     return;
   opt = sys.argv[1]
   if opt == "init":
-    url = sys.argv[2]
+    url = None
+    if len(sys.argv) == 3:
+      url = sys.argv[2]
     create_ticket_repository(url);
     return;
 
@@ -36,14 +38,17 @@ def parse_opt():
     return;
 
 def create_ticket_repository(url):
-  """ init [url] - initialized repository setting """
-  config = ConfigParser.RawConfigParser();
+  """ init (url) - initialized repository setting """
   if os.path.exists(local_trac_dir) == False:
     os.mkdir(local_trac_dir);
+  
+  config = ConfigParser.RawConfigParser();
+  if url != None:
+    config.add_section("REPOSITORY")
+    config.set("REPOSITORY","URL",url);
   path = __get_config_path__()
-  config.add_section("REPOSITORY")
-  config.set("REPOSITORY","URL",url);
   config.write(open(path,"w"));
+  
   init_ticket_db();
 
 def init_ticket_db():
@@ -92,7 +97,13 @@ def ticket_push():
   config = ConfigParser.RawConfigParser();
   path = __get_config_path__()
   config.read(path);
+  if config.has_section("REPOSITORY") == False:
+    call_repository_error();
+    return;
   url = config.get("REPOSITORY","URL")
+  if url == None:
+    call_repository_error();
+    return;
   server = xmlrpclib.ServerProxy(url);
   for id,ticket_id,summary,close in db.execute('select * from local_ticket'):
     resistered = ticket_id != None
@@ -100,6 +111,12 @@ def ticket_push():
       registered_id = server.ticket.create(summary,"",{'type':'defect'})
       print "created", registered_id,summary;
       db.execute("update local_ticket set ticket_id=? where id = ?",(registered_id,id))
+
+def call_repository_error():
+  print """URL is not setting.
+  Please do:
+    gitrac config REPOSITORY.URL [URL]"""
+  return;
 
 def help():
   """ help - showing message """
