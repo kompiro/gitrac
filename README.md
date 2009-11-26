@@ -46,6 +46,10 @@ commands:
 
   pulled tickets from remote repository.
 
+- config [KEY] [VALUE](NOT IMPREMENTED)
+
+  added config values like REPOSITORY.URL
+
 License
 -------
 
