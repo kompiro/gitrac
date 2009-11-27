@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name = 'gitrac',
-    version = '0.0.1',
+    version = '0.0.2',
     description = 'distributed Trac Ticket repository like git',
     author = 'Hiroki Kondo',
     author_email = 'kompiro@gmail.com',
