@@ -4,3 +4,4 @@ gitrac.egg-info/
 **/**/*~
 *~
 .trac
+*.pyc
