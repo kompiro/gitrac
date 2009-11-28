@@ -6,6 +6,7 @@ import sys
 import sqlite3
 import xmlrpclib
 import ConfigParser
+from gitrac import command
 
 home = os.environ['PWD'];
 local_trac_dir = home+'/.trac';
@@ -65,6 +66,7 @@ def not_exists_local_ticket():
   """;
   for count in db.execute(sql):
     return count[0] == 0;
+
 
 def create_local_ticket():
   sql = u"""CREATE TABLE IF NOT EXISTS local_ticket (
