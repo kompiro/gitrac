@@ -28,6 +28,10 @@ class ListCommand(DbCommand):
 
     def execute(self):
         result = self.ticket_list()
+        print """
+ID      RepoID  Closed  Summary
+%s""" % ("=" * 60)
+
         for ticket in self.ticket_list():
             print ticket
 
@@ -41,18 +45,29 @@ class ListCommand(DbCommand):
                 show = ticket_id
             else:
                 show = "x"
-            results.append(ListedTicket(id,show,summary.encode('utf-8'),close == 1))
+            results.append(
+                ListedTicket(
+                    id,
+                    show,
+                    close == 1,
+                    summary.encode('utf-8')))
         return results
 
-
 class ListedTicket():
-    def __init__(self,id,remote_id,summary,closed):
+    def __init__(self,id,remote_id,closed,summary):
         self.id = id;
         self.remote_id = remote_id;
         self.summary = summary;
         self.closed = closed;
     def __str__(self):
-        return "%d\t%s\t'%10s'\t%s" % (self.id,self.remote_id,self.summary,self.closed)
+        show_summary = self.summary
+        if len(show_summary) > 40:
+            show_summary = show_summary[:40]
+        return '%d\t%s\t%s\t%s' % (
+                self.id,
+                self.remote_id,
+                self.closed,
+                show_summary)
 
 if __name__=='__main__':
     command = ListCommand()
