@@ -28,7 +28,7 @@ class ListCommand(DbCommand):
 
     def execute(self):
         result = self.ticket_list()
-        for ticket in command.ticket_list():
+        for ticket in self.ticket_list():
             print ticket
 
     def ticket_list(self):

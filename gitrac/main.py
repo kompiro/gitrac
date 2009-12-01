@@ -78,14 +78,9 @@ def create_local_ticket():
   db.execute(sql);
 
 def ticket_list():
-  """ list - show local ticket list """
-  for id,ticket_id,summary,close in db.execute('select * from local_ticket'):
-    resistered = ticket_id != None
-    if resistered:
-      show = ticket_id
-    else:
-      show = "unregistered"
-    print id,show,summary,close == 1
+    """ list - show local ticket list """
+    c = command.ListCommand();
+    c.execute();
 
 def ticket_add(summary):
   """ add [summary] - create ticket to local ticket """
