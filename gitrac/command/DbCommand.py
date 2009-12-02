@@ -23,3 +23,6 @@ class DbCommand:
             close)
         """;
         self.db.execute(sql);
+
+    def execute(self,*val):
+        pass

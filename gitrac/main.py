@@ -12,31 +12,33 @@ home = os.environ['PWD'];
 local_trac_dir = home+'/.trac';
 
 def parse_opt():
-  if len(sys.argv) == 1:
-    help();
-    return;
-  opt = sys.argv[1]
-  if opt == "init":
-    url = None
-    if len(sys.argv) == 3:
-      url = sys.argv[2]
-    create_ticket_repository(url);
-    return;
+    if len(sys.argv) == 1:
+        help();
+        return;
+    opt = sys.argv[1]
+    if opt == "init":
+        url = None
+        if len(sys.argv) == 3:
+            url = sys.argv[2]
+        create_ticket_repository(url);
+        return;
 
-  init_ticket_db();
-  if opt == "list":
-    ticket_list();
-    return;
-  if opt == "add":
-    summary = sys.argv[2]
-    ticket_add(summary);
-    return;
-  if opt == "push":
-    ticket_push();
-    return;
-  if opt == "help":
-    help();
-    return;
+    init_ticket_db();
+    if opt == "list":
+        ticket_list();
+        return;
+    if opt == "add":
+        summary = sys.argv[2]
+        ticket_add(summary);
+        return;
+    if opt == "push":
+        ticket_push();
+        return;
+    if opt == "help":
+        help();
+        return;
+    else:
+        help();
 
 def create_ticket_repository(url):
   """ init (url) - initialized repository setting """
@@ -83,11 +85,8 @@ def ticket_list():
     c.execute();
 
 def ticket_add(summary):
-  """ add [summary] - create ticket to local ticket """
-  sql = u"""
-  insert into local_ticket values(null,?,?,?)
-  """;
-  db.execute(sql,(None,summary.decode('utf-8'),False));  
+    """ add [summary] - create ticket to local ticket """
+    c = command.AddCommand()
 
 def ticket_push():
   """ push - push tickets to Trac repository """

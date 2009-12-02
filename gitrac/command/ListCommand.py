@@ -6,6 +6,7 @@ import os
 from gitrac.command.DbCommand import *
 
 class ListCommand(DbCommand):
+    """ list - show local ticket list """
 
     def execute(self):
         result = self.ticket_list()
@@ -17,7 +18,6 @@ ID      RepoID  Closed  Summary
             print ticket
 
     def ticket_list(self):
-        """ list - show local ticket list """
         tickets = self.db.execute("select * from local_ticket");
         results = []
         for id,ticket_id,summary,close in tickets:
@@ -51,6 +51,7 @@ class ListedTicket():
                 show_summary)
 
 if __name__=='__main__':
-    command = ListCommand()
-    for ticket in command.ticket_list():
+    from gitrac.command import *
+    c = create_command("list")
+    for ticket in c.ticket_list():
         print ticket
